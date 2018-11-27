@@ -1,52 +1,67 @@
-// Write your numbers code in this file!
-// http://numbersapi.com/23/trivia?fragment <- Numbers API for 1
+const factDiv = document.getElementById('one-facts')
+const numberField = document.getElementById('pick-a-number')
+const randomFactDiv = document.getElementById('random-math-fact')
+const yearDiv = document.getElementById('year-history')
 
-const numberOneButton = document.getElementById('number-one')
-numberOneButton.addEventListener('click', randomOneFact)
+document.addEventListener('DOMContentLoaded', (event) => {
 
-function randomOneFact() {
-  const oneFacts = document.getElementById('one-facts')
-  fetch('http://numbersapi.com/1/trivia')
-    .then((response) => {
-      let parsedResponse = response.text()
-      return parsedResponse
+  var year = 2018
+
+  setInterval(function() {
+    fetch(`http://numbersapi.com/${year}/year`)
+    .then(response => response.text())
+    .then(text => {
+      yearDiv.innerText = text
     })
-    .then((parsedResponse) => {
-      oneFacts.innerHTML += `${parsedResponse}` + `<br>`
-    })
+    year--
+  }, 5000)
+
+  function numberFetch(num) {
+    return fetch(`http://numbersapi.com/${num}/trivia`)
+    .then(response => response.text())
+  }
+
+  document.addEventListener('click', (event) => {
+    if (event.target.id == "number-one") {
+      numberFetch(1)
+      .then(text => {
+        factDiv.innerText = text;
+      })
+    }
+  })
+
+  function timeOutAppend(num) {
+    return numberFetch(num)
+           .then(text => {
+           randomFactDiv.innerText = text;
+           })
+  }
+
+  numberField.addEventListener('change', () => {
+    timeOutAppend(numberField.value)
+  })
+
+  const allTheNumbers = document.getElementById('all-the-numbers')
+  const allNumbersButton = document.getElementById('all-numbers-button')
+  allNumbersButton.addEventListener('click', function(event) {
+    getRandomNumberFacts(allTheNumbers)
+  })
+
+  const getRandomNumberFacts = function(targetDiv) {
+  const numUl = document.createElement('ul')
+  targetDiv.appendChild(numUl)
+  for (let i = 0; i < 100; i++) {
+    const num = Math.floor(Math.random() * 1000) // random number between 0 and 9999
+    numberFetch(num)
+      .then(text => {
+        const numLi = document.createElement('li')
+        numUl.appendChild(numLi)
+        numLi.innerHTML = text
+      })
+      .catch(response => {
+        console.error(response)
+      })
+  }
 }
 
-const pickANumber = document.getElementById('pick-a-number')
-pickANumber.addEventListener('change', randomNumFact)
-
-function randomNumFact() {
-  console.log(`%cnum submitted: ${pickANumber.value}`, 'color: blue')
-  const randomMathFact = document.getElementById('random-math-fact')
-  fetch(`http://numbersapi.com/${pickANumber.value}/math`)
-    .then((response) => {
-      return response.text()
-    })
-    .then((parsedResponse) => {
-      randomMathFact.innerHTML += `${parsedResponse}` + `<br>`
-    })
-}
-
-let currentYear = 2018
-
-function repeatHistory(year) {
-  console.log(`%crepeat history: ${year}`, 'color: red')
-  const yearHistory = document.getElementById('year-history')
-
-  fetch(`http://numbersapi.com/${year}/year`)
-    .then((response) => {
-      return response.text()
-    })
-    .then((parsedResponse) => {
-      yearHistory.innerHTML += `${parsedResponse}` + `<br>`
-    }).then((response) =>{
-      currentYear -= 1
-      setTimeout(() => { repeatHistory(currentYear) }, 10000)
-    })
-}
-
-repeatHistory(currentYear)
+})
