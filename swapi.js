@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const planetSelector = document.querySelector('#planetForm');
   planetSelector.addEventListener('submit', getPlanet);
   const droidBtn = document.querySelector('#find-droids');
-  droidBtn.addEventListener('click', getDroids)
+  droidBtn.addEventListener('click', getDroids);
 
 });
 
@@ -54,16 +54,30 @@ function getPlanet(planetForm) {
 // Show each droid's name, height, and mass in the appropriate spans in the `#droid-2` and `#droid-3` divs
 
 function getDroids() {
-  const chosenDroids = [2.3];
+
+  const chosenDroids = [2, 3];
   chosenDroids.map(droidID => {
     const droidNameSpan = document.getElementById(`droid-${droidID}-name`);
     const droidHeightSpan = document.getElementById(`droid-${droidID}-height`);
     const droidMassSpan = document.getElementById(`droid-${droidID}-mass`);
-    const droidBtn = document.getElementById(`droid-${id}-btn`)
-  })
+    const droidBtn = document.getElementById(`droid-${droidID}-btn`);
+    fetch(`https://swapi.co/api/people/${droidID}`)
+      .then(r => r.json())
+      .then(droidData => {
+        droidNameSpan.innerHTML = `${droidData.name}`;
+        droidHeightSpan.innerHTML = `${droidData.height}`;
+        droidMassSpan.innerHTML = `${droidData.mass}`;
+        droidBtn.addEventListener('click', getHomePlanet(droidData.homeworld, droidID));
+      });
+  });
 }
 
 // getHomePlanet
-function getHomePlanet() {
-
+// droidData.homeworld - homeworld retrieves an URL of a planet resource, a planet that this person was born on or inhabits
+function getHomePlanet(planetData, id) {
+  fetch(planetData)
+    .then(r => r.json())
+    .then(parsedPlanet => {
+      document.getElementById(`droid-${id}-homeworld`).innerHTML = parsedPlanet.name;
+    });
 }
