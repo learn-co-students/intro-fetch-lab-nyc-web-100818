@@ -48,10 +48,10 @@ function getPlanet(planetForm) {
   }
 }
 
-// getDroids
-// When the page loads, fetch the data for the characters C-3P0 (id: 2) and R2-D2 (id: 3)
+// getDroids ✅
+// When the page loads, fetch the data for the characters C-3P0 (id: 2) and R2-D2 (id: 3) ✅
 // i.e. https://swapi.co/api/people/2 , https://swapi.co/api/people/3 - two fetches, two IDs = > save IDs to an array and iterate
-// Show each droid's name, height, and mass in the appropriate spans in the `#droid-2` and `#droid-3` divs
+// Show each droid's name, height, and mass in the appropriate spans in the `#droid-2` and `#droid-3` divs ✅
 
 function getDroids() {
 
@@ -81,3 +81,6 @@ function getHomePlanet(planetData, id) {
       document.getElementById(`droid-${id}-homeworld`).innerHTML = parsedPlanet.name;
     });
 }
+
+
+//
