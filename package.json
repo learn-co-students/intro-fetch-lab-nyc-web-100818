@@ -28,6 +28,7 @@
     "learn-browser": "^0.1.14"
   },
   "dependencies": {
+    "jshint": "^2.9.6",
     "sinon-chai": "^3.2.0"
   }
 }
