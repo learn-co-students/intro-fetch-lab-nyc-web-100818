@@ -26,14 +26,32 @@
 
         <h2>Planet Search</h2>
         <form id="planetForm">
-          <input id="planetInput" type="text" placeholder="enter planet number"/>
+          <input id="planetInput" type="text" placeholder="enter planet number" />
           <button id="findPlanet" type="submit">Find Planet!</button>
         </form>
         <div id="planetData"></div>
 
         <h2>Find These Droids:</h2>
-        <div id="droid-2"></div>
-        <div id="droid-3"></div>
+        <button id="find-droids">Find Droids</button>
+        <br>
+        <br>
+        <div id="droid-2">
+          <p>Droid Name: <span id="droid-2-name"></span></p>
+          <p>Droid Height: <span id="droid-2-height"></span></p>
+          <p>Droid Mass: <span id="droid-2-mass"></span></p>
+          <p>Homeworld: <span id="droid-2-homeworld"></span></p>
+          <br>
+          <button id="droid-2-btn">Show Droid's Homeworld Details</button>
+        </div>
+        <br>
+        <div id="droid-3">
+          <p>Droid Name: <span id="droid-3-name"></span></p>
+          <p>Droid Height: <span id="droid-3-height"></span></p>
+          <p>Droid Mass: <span id="droid-3-mass"></span></p>
+          <p>Homeworld:<span id="droid-3-homeworld"></span></p>
+          <br>
+          <button id="droid-3-btn">Show Droid's Homeworld Details</button>
+        </div>
       </div>
 
       <div class="eight wide column">
@@ -45,7 +63,7 @@
         </div>
         </br>
         <h2>Pick a Number, Any Number</h2>
-        <input id="pick-a-number" type="text" placeholder="enter a number"/>
+        <input id="pick-a-number" type="text" placeholder="enter a number" />
         <div id="random-math-fact">
 
         </div>
@@ -65,8 +83,9 @@
   <!-- Include Mocha and set it up for BDD-style testing. -->
   <script src="node_modules/mocha/mocha.js"></script>
   <script>
-  mocha.setup("bdd");
-</script>
+    mocha.setup("bdd");
+
+  </script>
 
   <!-- Include Chai as the matcher library. -->
   <script src="node_modules/chai/chai.js"></script>
